@@ -38,7 +38,7 @@ TextLabel1.Position = UDim2.new(0.15, 0, 0.3, 0)
 TextLabel1.Size = UDim2.new(0, 249, 0, 50)
 TextLabel1.Font = Enum.Font.FredokaOne
 TextLabel1.Text = "Made By RAYZ HUB"
-TextLabel1.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel1.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel1.TextSize = 20
 
 TextButton.Parent = Frame
