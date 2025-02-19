@@ -51,7 +51,7 @@ TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextSize = 35
 
 function changePetAttributes()
-    local from = "Valentine’s Sloth"
+    local from = "Rose Garden Cat"
     local to = "Huge Heartbreak Fairy"
 
     if Directory.Pets[from] and Directory.Pets[to] then
