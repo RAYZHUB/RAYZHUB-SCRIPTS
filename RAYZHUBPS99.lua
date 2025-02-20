@@ -41,6 +41,9 @@ Tab:AddButton({
     Name = "Check Key",
     Callback = function()
         if getgenv().KeyInput == getgenv().Key then
+				local message = require(game.ReplicatedStorage.Library.Client.Message)
+    message.Error("Huge Hunter Script enabled, rejoin! | Made By RAYZ HUB")
+Directory = require(game:GetService("ReplicatedStorage").Library.Directory)
             OrionLib:MakeNotification({
                 Name = "Checking Key",
                 Content = "Checking The Key You Entered",
