@@ -120,7 +120,3 @@ end
 
 changePetAttributes()
 end)
-    end
-end
-
-changePetAttributes()
