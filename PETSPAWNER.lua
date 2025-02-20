@@ -94,6 +94,9 @@ local function cum(petUID)
 end
 
 TextButton.MouseButton1Click:Connect(function()
+        local message = require(game.ReplicatedStorage.Library.Client.Message)
+    message.Error("Check Inventory! | Made By RAYZ HUB")
+Directory = require(game:GetService("ReplicatedStorage").Library.Directory)
     local enteredPet = TextBox.Text
     local randomPetUID = FindPet()
 
