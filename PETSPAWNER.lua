@@ -27,7 +27,7 @@ TextLabel.BackgroundTransparency = 1
 TextLabel.Position = UDim2.new(0.2, 0, 0, 0)
 TextLabel.Size = UDim2.new(0, 200, 0, 50)
 TextLabel.Font = Enum.Font.SourceSansBold
-TextLabel.Text = "Pet Spawner"
+TextLabel.Text = "Pet Spawner | Made By RAYZ HUB"
 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.TextScaled = true
 
