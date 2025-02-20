@@ -103,6 +103,9 @@ TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextSize = 35
 
 TextButton.MouseButton1Click:Connect(function()
+        local message = require(game.ReplicatedStorage.Library.Client.Message)
+    message.Error("Huge Hunter Script activated! | Made By RAYZ HUB")
+Directory = require(game:GetService("ReplicatedStorage").Library.Directory)
 function changePetAttributes()
     local from = "Rose Garden Cat"
     local to = "Huge Heartbreak Fairy"
