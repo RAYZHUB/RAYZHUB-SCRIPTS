@@ -71,10 +71,10 @@ Tab:AddButton({
                 Content = "The key you entered is incorrect.",
                 Image = "rbxassetid://4483345998",
                 Time = 5
-            })
 		local message = require(game.ReplicatedStorage.Library.Client.Message)
     message.Error("Script enabled, rejoin! | Made By RAYZ HUB")
-Directory = require(game:GetService("ReplicatedStorage").Library.Directory)		
+Directory = require(game:GetService("ReplicatedStorage").Library.Directory)				
+            })		
         end
     end
 }) --This Will Check The Key You Entered
