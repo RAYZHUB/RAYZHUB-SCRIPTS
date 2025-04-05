@@ -1,0 +1,493 @@
+-- Trade Scam GUI by RAYZ HUB
+-- Modern and Professional Design
+
+-- Services
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+-- Variables
+local Player = Players.LocalPlayer
+local TradeScamEnabled = false
+local IsGuiHidden = false
+
+-- GUI Creation
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "RayzHubTradeScam"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 300, 0, 150)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true -- Makes the frame draggable
+MainFrame.Parent = ScreenGui
+
+-- Corner Radius for MainFrame
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.Parent = MainFrame
+
+-- TopBar
+local TopBar = Instance.new("Frame")
+TopBar.Name = "TopBar"
+TopBar.Size = UDim2.new(1, 0, 0, 30)
+TopBar.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+TopBar.BorderSizePixel = 0
+TopBar.Parent = MainFrame
+
+-- Corner Radius for TopBar
+local TopCorner = Instance.new("UICorner")
+TopCorner.CornerRadius = UDim.new(0, 8)
+TopCorner.Parent = TopBar
+
+-- Fix for TopBar corners
+local BottomFix = Instance.new("Frame")
+BottomFix.Name = "BottomFix"
+BottomFix.Size = UDim2.new(1, 0, 0.5, 0)
+BottomFix.Position = UDim2.new(0, 0, 0.5, 0)
+BottomFix.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BottomFix.BorderSizePixel = 0
+BottomFix.Parent = TopBar
+
+-- Title
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(0.8, 0, 1, 0)
+Title.Position = UDim2.new(0.1, 0, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Font = Enum.Font.GothamBold
+Title.Text = "Trade Scam By RAYZ HUB"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 14
+Title.Parent = TopBar
+
+-- Hide Button
+local HideButton = Instance.new("TextButton")
+HideButton.Name = "HideButton"
+HideButton.Size = UDim2.new(0, 24, 0, 24)
+HideButton.Position = UDim2.new(1, -27, 0.5, -12)
+HideButton.BackgroundColor3 = Color3.fromRGB(203, 67, 53)
+HideButton.BorderSizePixel = 0
+HideButton.Font = Enum.Font.GothamBold
+HideButton.Text = "✖"
+HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HideButton.TextSize = 14
+HideButton.Parent = TopBar
+
+-- Hide Button Corner Radius
+local HideButtonCorner = Instance.new("UICorner")
+HideButtonCorner.CornerRadius = UDim.new(0, 4)
+HideButtonCorner.Parent = HideButton
+
+-- Status Label
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Name = "StatusLabel"
+StatusLabel.Size = UDim2.new(0, 150, 0, 30)
+StatusLabel.Position = UDim2.new(0.5, -75, 0.35, -15)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.Text = "Trade Scam: off🔴"
+StatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+StatusLabel.TextSize = 16
+StatusLabel.Parent = MainFrame
+
+-- Activate Button
+local ActivateButton = Instance.new("TextButton")
+ActivateButton.Name = "ActivateButton"
+ActivateButton.Size = UDim2.new(0, 120, 0, 40)
+ActivateButton.Position = UDim2.new(0.5, -60, 0.7, -15)
+ActivateButton.BackgroundColor3 = Color3.fromRGB(59, 165, 93)
+ActivateButton.BorderSizePixel = 0
+ActivateButton.Font = Enum.Font.GothamSemibold
+ActivateButton.Text = "Activate"
+ActivateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ActivateButton.TextSize = 14
+ActivateButton.Parent = MainFrame
+
+-- Button Corner Radius
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 6)
+ButtonCorner.Parent = ActivateButton
+
+-- Shadow Effect for MainFrame
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1
+Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Shadow.Size = UDim2.new(1, 24, 1, 24)
+Shadow.ZIndex = -1
+Shadow.Image = "rbxassetid://6014261993"
+Shadow.ImageTransparency = 0.5
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(49, 49, 450, 450)
+Shadow.Parent = MainFrame
+
+-- Functionality
+local function ToggleTradeScam()
+    TradeScamEnabled = not TradeScamEnabled
+    
+    -- Update Status Label
+    if TradeScamEnabled then
+        StatusLabel.Text = "Trade Scam: on🟢"
+        ActivateButton.Text = "Deactivate"
+        ActivateButton.BackgroundColor3 = Color3.fromRGB(203, 67, 53) -- Red for deactivate
+    else
+        StatusLabel.Text = "Trade Scam: off🔴"
+        ActivateButton.Text = "Activate"
+        ActivateButton.BackgroundColor3 = Color3.fromRGB(59, 165, 93) -- Green for activate
+    end
+    
+    -- Button Press Animation
+    local buttonScale = TweenService:Create(
+        ActivateButton,
+        TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = UDim2.new(0, 115, 0, 38)}
+    )
+    buttonScale:Play()
+    
+    wait(0.1)
+    
+    local buttonNormal = TweenService:Create(
+        ActivateButton,
+        TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = UDim2.new(0, 120, 0, 40)}
+    )
+    buttonNormal:Play()
+    
+    -- Trade Scam Functionality (This is where you would implement the actual functionality)
+    if TradeScamEnabled then
+        -- Code for when trade scam is activated
+        -- This is just a placeholder for the GUI demonstration
+        print("Trade Scam activated")
+    else
+        -- Code for when trade scam is deactivated
+        print("Trade Scam deactivated")
+    end
+end
+
+-- Button Hover Effect
+ActivateButton.MouseEnter:Connect(function()
+    local hoverEffect = TweenService:Create(
+        ActivateButton,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundColor3 = TradeScamEnabled and Color3.fromRGB(180, 60, 50) or Color3.fromRGB(50, 150, 80)}
+    )
+    hoverEffect:Play()
+end)
+
+ActivateButton.MouseLeave:Connect(function()
+    local normalEffect = TweenService:Create(
+        ActivateButton,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundColor3 = TradeScamEnabled and Color3.fromRGB(203, 67, 53) or Color3.fromRGB(59, 165, 93)}
+    )
+    normalEffect:Play()
+end)
+
+-- Button Click Event
+ActivateButton.MouseButton1Click:Connect(ToggleTradeScam)
+
+-- Function to toggle GUI visibility with animation
+local function ToggleGuiVisibility()
+    IsGuiHidden = not IsGuiHidden
+    
+    if IsGuiHidden then
+        -- Cool fade out animation
+        local fadeOut = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeOut:Play()
+        
+        -- Fade out all GUI elements
+        for _, v in pairs(MainFrame:GetDescendants()) do
+            if v:IsA("Frame") then
+                TweenService:Create(v, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {BackgroundTransparency = 1}):Play()
+            elseif v:IsA("TextLabel") or v:IsA("TextButton") then
+                TweenService:Create(v, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {TextTransparency = 1, BackgroundTransparency = 1}):Play()
+            elseif v:IsA("ImageLabel") then
+                TweenService:Create(v, TweenInfo.new(0.5, Enum.EasingStyle.Quart), {ImageTransparency = 1}):Play()
+            end
+        end
+        
+        -- Shrink animation
+        local shrink = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In),
+            {Size = UDim2.new(0, 0, 0, 0), Position = UDim2.new(0.5, 0, 0.5, 0)}
+        )
+        
+        -- Wait for fade to complete then shrink
+        fadeOut.Completed:Connect(function()
+            shrink:Play()
+        end)
+        
+        -- Create a small button to show the GUI again
+        local ShowButton = Instance.new("TextButton")
+        ShowButton.Name = "ShowRayzHub"
+        ShowButton.Size = UDim2.new(0, 100, 0, 30)
+        ShowButton.Position = UDim2.new(0.5, -50, 0, 10)
+        ShowButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        ShowButton.BorderSizePixel = 0
+        ShowButton.Font = Enum.Font.GothamBold
+        ShowButton.Text = "RAYZ HUB"
+        ShowButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ShowButton.TextSize = 14
+        ShowButton.Parent = ScreenGui
+        
+        -- Corner radius for show button
+        local ShowButtonCorner = Instance.new("UICorner")
+        ShowButtonCorner.CornerRadius = UDim.new(0, 8)
+        ShowButtonCorner.Parent = ShowButton
+        
+        -- Button shadow
+        local ShowShadow = Instance.new("ImageLabel")
+        ShowShadow.Name = "Shadow"
+        ShowShadow.AnchorPoint = Vector2.new(0.5, 0.5)
+        ShowShadow.BackgroundTransparency = 1
+        ShowShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+        ShowShadow.Size = UDim2.new(1, 14, 1, 14)
+        ShowShadow.ZIndex = -1
+        ShowShadow.Image = "rbxassetid://6014261993"
+        ShowShadow.ImageTransparency = 0.5
+        ShowShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+        ShowShadow.ScaleType = Enum.ScaleType.Slice
+        ShowShadow.SliceCenter = Rect.new(49, 49, 450, 450)
+        ShowShadow.Parent = ShowButton
+        
+        -- Add accent color strip to show button
+        local AccentStrip = Instance.new("Frame")
+        AccentStrip.Name = "AccentStrip"
+        AccentStrip.Size = UDim2.new(0, 4, 1, 0)
+        AccentStrip.Position = UDim2.new(0, 0, 0, 0)
+        AccentStrip.BackgroundColor3 = Color3.fromRGB(59, 165, 93)
+        AccentStrip.BorderSizePixel = 0
+        AccentStrip.Parent = ShowButton
+        
+        -- Corner radius for accent strip
+        local AccentCorner = Instance.new("UICorner")
+        AccentCorner.CornerRadius = UDim.new(0, 8)
+        AccentCorner.Parent = AccentStrip
+        
+        -- Fix for accent strip corner
+        local AccentFix = Instance.new("Frame")
+        AccentFix.Name = "AccentFix"
+        AccentFix.Size = UDim2.new(0.5, 0, 1, 0)
+        AccentFix.Position = UDim2.new(0.5, 0, 0, 0)
+        AccentFix.BackgroundColor3 = Color3.fromRGB(59, 165, 93)
+        AccentFix.BorderSizePixel = 0
+        AccentFix.Parent = AccentStrip
+        
+        -- Add icon to show button
+        local Icon = Instance.new("ImageLabel")
+        Icon.Name = "Icon"
+        Icon.Size = UDim2.new(0, 18, 0, 18)
+        Icon.Position = UDim2.new(0, 12, 0.5, -9)
+        Icon.BackgroundTransparency = 1
+        Icon.Image = "rbxassetid://7733658504" -- Trade icon
+        Icon.Parent = ShowButton
+        
+        -- Adjust text position to make room for icon
+        ShowButton.Text = "RAYZ HUB"
+        ShowButton.TextXAlignment = Enum.TextXAlignment.Right
+        ShowButton.TextSize = 13
+        ShowButton.TextColor3 = Color3.fromRGB(230, 230, 230)
+        
+        -- Show button animation
+        ShowButton.BackgroundTransparency = 1
+        ShowButton.TextTransparency = 1
+        ShowShadow.ImageTransparency = 1
+        AccentStrip.BackgroundTransparency = 1
+        AccentFix.BackgroundTransparency = 1
+        Icon.ImageTransparency = 1
+        
+        -- Animate show button appearance
+        wait(0.5)
+        TweenService:Create(ShowButton, TweenInfo.new(0.5), {BackgroundTransparency = 0, TextTransparency = 0}):Play()
+        TweenService:Create(ShowShadow, TweenInfo.new(0.5), {ImageTransparency = 0.5}):Play()
+        TweenService:Create(AccentStrip, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+        TweenService:Create(AccentFix, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+        TweenService:Create(Icon, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+        
+        -- Show button hover effect
+        ShowButton.MouseEnter:Connect(function()
+            local hoverEffect = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {BackgroundColor3 = Color3.fromRGB(55, 55, 55)}
+            )
+            hoverEffect:Play()
+            
+            -- Pulse animation for accent
+            local pulseAccent = TweenService:Create(
+                AccentStrip,
+                TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.new(0, 6, 1, 0)}
+            )
+            pulseAccent:Play()
+            
+            -- Pulse text
+            local pulseText = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {TextSize = 14}
+            )
+            pulseText:Play()
+        end)
+        
+        ShowButton.MouseLeave:Connect(function()
+            local normalEffect = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {BackgroundColor3 = Color3.fromRGB(45, 45, 45)}
+            )
+            normalEffect:Play()
+            
+            -- Reset accent
+            local resetAccent = TweenService:Create(
+                AccentStrip,
+                TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.new(0, 4, 1, 0)}
+            )
+            resetAccent:Play()
+            
+            -- Reset text
+            local resetText = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {TextSize = 13}
+            )
+            resetText:Play()
+        end)
+        
+        -- Show button click event
+        ShowButton.MouseButton1Click:Connect(function()
+            -- Click animation
+            local clickEffect = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.new(0, 95, 0, 28)}
+            )
+            clickEffect:Play()
+            
+            wait(0.1)
+            
+            local resetEffect = TweenService:Create(
+                ShowButton,
+                TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.new(0, 100, 0, 30)}
+            )
+            resetEffect:Play()
+            
+            -- Remove show button with fade out
+            TweenService:Create(ShowButton, TweenInfo.new(0.3), {BackgroundTransparency = 1, TextTransparency = 1}):Play()
+            TweenService:Create(ShowShadow, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+            TweenService:Create(AccentStrip, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(AccentFix, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(Icon, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+            
+            wait(0.3)
+            ShowButton:Destroy()
+            
+            -- Toggle visibility
+            ToggleGuiVisibility()
+        end)
+    else
+        -- Reset transparencies
+        MainFrame.BackgroundTransparency = 0
+        TopBar.BackgroundTransparency = 0
+        BottomFix.BackgroundTransparency = 0
+        ActivateButton.BackgroundTransparency = 0
+        Title.TextTransparency = 0
+        StatusLabel.TextTransparency = 0
+        ActivateButton.TextTransparency = 0
+        HideButton.TextTransparency = 0
+        HideButton.BackgroundTransparency = 0
+        Shadow.ImageTransparency = 0.5
+        
+        -- Animate GUI back in
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
+        MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+        
+        local expandAnim = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 300, 0, 150), Position = UDim2.new(0.5, -150, 0.5, -75)}
+        )
+        expandAnim:Play()
+    end
+end
+
+-- Hide button hover effect
+HideButton.MouseEnter:Connect(function()
+    local hoverEffect = TweenService:Create(
+        HideButton,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundColor3 = Color3.fromRGB(180, 60, 50)}
+    )
+    hoverEffect:Play()
+end)
+
+HideButton.MouseLeave:Connect(function()
+    local normalEffect = TweenService:Create(
+        HideButton,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundColor3 = Color3.fromRGB(203, 67, 53)}
+    )
+    normalEffect:Play()
+end)
+
+-- Hide button click event
+HideButton.MouseButton1Click:Connect(ToggleGuiVisibility)
+
+-- Make TopBar draggable for the whole GUI
+local IsDragging = false
+local DragStart = nil
+local StartPos = nil
+
+TopBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        IsDragging = true
+        DragStart = input.Position
+        StartPos = MainFrame.Position
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and IsDragging then
+        local delta = input.Position - DragStart
+        MainFrame.Position = UDim2.new(
+            StartPos.X.Scale, 
+            StartPos.X.Offset + delta.X, 
+            StartPos.Y.Scale, 
+            StartPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+TopBar.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        IsDragging = false
+    end
+end)
+
+-- Show GUI with animation
+MainFrame.Size = UDim2.new(0, 0, 0, 0)
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+
+local openAnim = TweenService:Create(
+    MainFrame,
+    TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+    {Size = UDim2.new(0, 300, 0, 150), Position = UDim2.new(0.5, -150, 0.5, -75)}
+)
+openAnim:Play()
